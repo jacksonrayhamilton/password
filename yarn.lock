@@ -876,9 +876,9 @@ vm-browserify@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
 
-wordlist-english@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/wordlist-english/-/wordlist-english-1.2.0.tgz#506bd52fa1b69cc174bede7ec966651a92faced6"
+wordlist-english@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/wordlist-english/-/wordlist-english-1.2.1.tgz#7a76da3c7ac26919d80d1a54056c796830febdf7"
 
 wrappy@1:
   version "1.0.2"

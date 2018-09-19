@@ -6,6 +6,6 @@
   },
   "dependencies": {
     "browserify": "^16.2.2",
-    "wordlist-english": "^1.2.0"
+    "wordlist-english": "^1.2.1"
   }
 }
