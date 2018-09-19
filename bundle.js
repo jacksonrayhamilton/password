@@ -23,11 +23,25 @@ function randomInt (min, max) {
   return Math.floor(randomFloat() * (max - min)) + min;
 }
 
-function alphanumeric (len) {
-  var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+function ascii (len, options) {
+  var getCharCode
+  function symbol () {
+    return randomInt(32, 127)
+  }
+  function alnum () {
+    var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    return charset[randomInt(0, charset.length)].charCodeAt(0)
+  }
+  if (options.symbols) getCharCode = symbol
+  else getCharCode = alnum
   var retVal = ''
-  for (var i = 0, n = charset.length; i < len; ++i) {
-    retVal += charset.charAt(Math.floor(randomFloat() * n))
+  for (var i = 0; i < len; ++i) {
+    do var charCode = getCharCode()
+    while (leadingOrTrailingSpace())
+    retVal += String.fromCharCode(charCode)
+  }
+  function leadingOrTrailingSpace () {
+    return (i === 0 || i === len - 1) && charCode === 32
   }
   return retVal
 }
@@ -41,22 +55,33 @@ function words (len) {
   return retVal
 }
 
-function generateSecurePassword () {
-  return alphanumeric(randomInt(16, 33))
+function generateSecurePassword (options) {
+  return ascii(randomInt(16, 33), options)
 }
 
 function generateFriendlyPassword () {
   return words(randomInt(4, 7))
 }
 
-function regenerate () {
-  document.querySelector('#secure-password').value = generateSecurePassword()
+function showSecurePassword () {
+  document.querySelector('#secure-password').value = generateSecurePassword({
+    symbols: document.querySelector('#secure-symbols').checked
+  })
+}
+
+function showFriendlyPassword () {
   document.querySelector('#friendly-password').value = generateFriendlyPassword()
 }
 
-document.querySelector('#regenerate').addEventListener('click', regenerate)
+function showPasswords () {
+  showSecurePassword()
+  showFriendlyPassword()
+}
 
-regenerate()
+document.querySelector('#secure-symbols').addEventListener('change', showSecurePassword)
+document.querySelector('#regenerate').addEventListener('click', showPasswords)
+
+showPasswords()
 
 },{"wordlist-english/american-words-10.json":2,"wordlist-english/american-words-20.json":3,"wordlist-english/american-words-35.json":4,"wordlist-english/english-words-10.json":5,"wordlist-english/english-words-20.json":6,"wordlist-english/english-words-35.json":7}],2:[function(require,module,exports){
 module.exports=["afterward","among","analog","apologize","behavior","catalog","center","color","colors","defense","favor","favorite","flavor","gray","judgment","labeled","labeling","labor","learned","organization","organize","organized","organizes","organizing","realize","realized","realizes","realizing","recognize","recognized","recognizes","recognizing","rumor","spelled"]
