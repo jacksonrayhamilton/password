@@ -23,15 +23,17 @@ function randomInt (min, max) {
   return Math.floor(randomFloat() * (max - min)) + min;
 }
 
+function symbol () {
+  return randomInt(32, 127)
+}
+
+function alnum () {
+  var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  return charset[randomInt(0, charset.length)].charCodeAt(0)
+}
+
 function ascii (len, options) {
   var getCharCode
-  function symbol () {
-    return randomInt(32, 127)
-  }
-  function alnum () {
-    var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    return charset[randomInt(0, charset.length)].charCodeAt(0)
-  }
   if (options.symbols) getCharCode = symbol
   else getCharCode = alnum
   var retVal = ''
@@ -46,10 +48,35 @@ function ascii (len, options) {
   return retVal
 }
 
-function words (len) {
+function intermediate1 () {
+  var charset = ',:;'
+  return charset[randomInt(0, charset.length)]
+}
+
+function intermediate2 () {
+  var charset = '+->=<'
+  return charset[randomInt(0, charset.length)]
+}
+
+function ending () {
+  var charset = '!.?'
+  return charset[randomInt(0, charset.length)]
+}
+
+function words (len, options) {
   var retVal = ''
   for (var i = 0, n = englishWords.length; i < len; ++i) {
-    retVal += englishWords[randomInt(0, n)]
+    var word = englishWords[randomInt(0, n)]
+    if (options.punctuation) {
+      if (i === 0) word = word.slice(0, 1).toUpperCase() + word.slice(1)
+      else if (i < len - 1) {
+        var chance = randomInt(0, 20)
+        if (chance >= 12 && chance < 18) word = word + intermediate1()
+        else if (chance === 18) word = word + ' ' + intermediate2()
+        else if (chance === 19) word = '(' + word + ')'
+      } else word = word + ending()
+    }
+    retVal += word
     if (i < len - 1) retVal += ' '
   }
   return retVal
@@ -59,8 +86,8 @@ function generateSecurePassword (options) {
   return ascii(randomInt(16, 33), options)
 }
 
-function generateFriendlyPassword () {
-  return words(randomInt(4, 7))
+function generateFriendlyPassword (options) {
+  return words(randomInt(4, 7), options)
 }
 
 function showSecurePassword () {
@@ -70,7 +97,9 @@ function showSecurePassword () {
 }
 
 function showFriendlyPassword () {
-  document.querySelector('#friendly-password').value = generateFriendlyPassword()
+  document.querySelector('#friendly-password').value = generateFriendlyPassword({
+    punctuation: document.querySelector('#friendly-punctuation').checked
+  })
 }
 
 function showPasswords () {
@@ -79,6 +108,7 @@ function showPasswords () {
 }
 
 document.querySelector('#secure-symbols').addEventListener('change', showSecurePassword)
+document.querySelector('#friendly-punctuation').addEventListener('change', showFriendlyPassword)
 document.querySelector('#regenerate').addEventListener('click', showPasswords)
 
 showPasswords()
