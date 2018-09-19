@@ -11,22 +11,20 @@ The password is generated with the cryptographic random number generator
 
 Two passwords are generated:
 
-- One with a random number of letters and numbers
-- One with a random number of English words
+- “Secure” password: Random number of letters and numbers (and optionally symbols)
+- “Friendly” password: Random English words (and optionally punctuation)
 
 The password with letters and numbers will be harder to guess, so I recommend
-using that form for most credentials and keeping track of the password somewhere
-safe.
+using that form for most credentials and noting the password somewhere safe.
 
 The password with letters and numbers can be enhanced by interspersing
-miscellaneous non-alphanumeric symbols into it, and I recommend this, but I
-don’t do it by default because so many websites have absolutely retarded
-password policies.
+miscellaneous non-alphanumeric symbols into it, and I recommend this, but this
+is made optional because many websites have restrictive password policies.
 
 The password with English words will be possible to remember, so I recommend
 using this form for credentials you need to type in by hand often or which you
 want to commit to memory and have absolutely no written copies of anywhere (for
 maximal security).
 
-The password with English words can be made more secure by adjusting
-capitalization or adding punctuation.
+The password with English words can be more secure with capitalization and
+punctuation.
